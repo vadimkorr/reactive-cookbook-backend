@@ -1,18 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using StorageProviders.CosmosDb;
 
 namespace Reactive.Webapi.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
+        private IUserStore<ApplicationUser> _store;
+        public ValuesController(IUserStore<ApplicationUser> store) {
+            _store = store;
+        }
+
         // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()
         {
+            _store.CreateAsync(null, new CancellationToken());
             return new string[] { "value1", "value2" };
         }
 
