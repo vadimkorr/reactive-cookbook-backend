@@ -31,13 +31,16 @@ namespace Reactive.Webapi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            CosmosDbClient cosmosDbClient = new CosmosDbClient(_endpointUri, _primaryKey);
+
+
             // Add identity types
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddDefaultTokenProviders();
 
             // Identity Services
             services.AddSingleton<IUserStore<ApplicationUser>>(provider => {
-                return new UserStore(_endpointUri, _primaryKey);
+                return new UserStore(cosmosDbClient, "IdentityDb", "users");
             });
 
             services.AddMvc();

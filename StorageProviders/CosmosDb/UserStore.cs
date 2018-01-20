@@ -12,14 +12,15 @@ namespace StorageProviders.CosmosDb
     public class UserStore : IUserStore<ApplicationUser>, IUserPasswordStore<ApplicationUser>
     {
         private DocumentClient _client;
-        public UserStore(string endpointUri, string primaryKey)
+        public UserStore(CosmosDbClient client, string db, string collection)
         {
-            _client = new DocumentClient(new Uri(endpointUri), primaryKey);
-            _client.CreateDatabaseIfNotExistsAsync(new Database { Id = "users" }).GetAwaiter().GetResult();
-        }
-        public UserStore(DocumentClient client)
-        {
-            _client = client;
+            _client = client.Client;
+            _client
+                .CreateDatabaseIfNotExistsAsync(new Database { Id = db })
+                .Wait();
+            _client
+                .CreateDocumentCollectionIfNotExistsAsync(UriFactory.CreateDatabaseUri(db), new DocumentCollection { Id = collection })
+                .Wait();
         }
 
         public Task<IdentityResult> CreateAsync(ApplicationUser user, CancellationToken cancellationToken)
