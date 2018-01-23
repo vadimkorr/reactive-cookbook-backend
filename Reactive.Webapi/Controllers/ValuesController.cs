@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using StorageProviders.CosmosDb;
+using Models.DbModels;
 
 namespace Reactive.Webapi.Controllers
 {
@@ -22,7 +22,6 @@ namespace Reactive.Webapi.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            _store.CreateAsync(null, new CancellationToken());
             return new string[] { "value1", "value2" };
         }
 

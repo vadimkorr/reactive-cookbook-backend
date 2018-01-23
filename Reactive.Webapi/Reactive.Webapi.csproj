@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,7 +19,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Reactive.DAL\Reactive.DAL.csproj" />
-    <ProjectReference Include="..\StorageProviders\StorageProviders.csproj" />
+    <ProjectReference Include="..\Models\Models.csproj" />
+    <ProjectReference Include="..\StorageProviders\Reactive.UserIdentity.csproj" />
   </ItemGroup>
 
 </Project>

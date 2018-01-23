@@ -12,7 +12,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using StorageProviders.CosmosDb;
+using Models.DbModels;
+using Reactive.DAL.CosmosDb;
+using Reactive.DAL.Interfaces;
+using Reactive.UserIdentity;
 
 namespace Reactive.Webapi
 {
@@ -20,6 +23,8 @@ namespace Reactive.Webapi
     {
         private const string _endpointUri = "https://localhost:8081";
         private const string _primaryKey = "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==";
+        private const string USERS_IDENTUTY_DB_NAME = "UserIdentity";
+        private const string USERS_IDENTITY_COLLECTION_NAME = "users";
 
         public Startup(IConfiguration configuration)
         {
@@ -32,15 +37,32 @@ namespace Reactive.Webapi
         public void ConfigureServices(IServiceCollection services)
         {
             CosmosDbClient cosmosDbClient = new CosmosDbClient(_endpointUri, _primaryKey);
+            cosmosDbClient.CreateDatabase(USERS_IDENTUTY_DB_NAME);
+            cosmosDbClient.CreateCollection(USERS_IDENTUTY_DB_NAME, USERS_IDENTITY_COLLECTION_NAME);
 
+            // Configure Identity
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequiredLength = 2;
+                options.User.RequireUniqueEmail = true;
+            });
 
             // Add identity types
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddDefaultTokenProviders();
 
+            services.AddTransient<UserQueries<ApplicationUser>>(provider => {
+                return new UserQueries(cosmosDbClient.get(), USERS_IDENTUTY_DB_NAME, USERS_IDENTITY_COLLECTION_NAME);
+            });
+
             // Identity Services
             services.AddSingleton<IUserStore<ApplicationUser>>(provider => {
-                return new UserStore(cosmosDbClient, "IdentityDb", "users");
+                return new UserStore(provider.GetService<UserQueries<ApplicationUser>>());
             });
 
             services.AddMvc();

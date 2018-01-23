@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace StorageProviders.CosmosDb
+namespace Models.DbModels
 {
     public class ApplicationRole
     {
