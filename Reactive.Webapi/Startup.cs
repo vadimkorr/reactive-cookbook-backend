@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -12,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Models.DbModels;
 using Reactive.DAL.CosmosDb;
 using Reactive.DAL.Interfaces;
@@ -53,17 +56,43 @@ namespace Reactive.Webapi
             });
 
             // Add identity types
-            services.AddIdentity<ApplicationUser, ApplicationRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddUserStore<UserStore>()
+                .AddRoleStore<RoleStore>()
                 .AddDefaultTokenProviders();
 
-            services.AddTransient<UserQueries<ApplicationUser>>(provider => {
+            // services.AddScoped<RoleManager<IdentityRole>>();
+
+            services.AddTransient<IUserQueries<ApplicationUser>>(provider => {
                 return new UserQueries(cosmosDbClient.get(), USERS_IDENTUTY_DB_NAME, USERS_IDENTITY_COLLECTION_NAME);
             });
 
-            // Identity Services
-            services.AddSingleton<IUserStore<ApplicationUser>>(provider => {
-                return new UserStore(provider.GetService<UserQueries<ApplicationUser>>());
+            // configure jwt authentication
+            //var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.ASCII.GetBytes("1234567890123456");// (appSettings.Secret);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
             });
+
+            // Identity Services
+            //services.AddSingleton<>();
+            //services.AddSingleton<IUserStore<ApplicationUser>>(provider => {
+            //    return new UserStore(provider.GetService<UserQueries<ApplicationUser>>());
+            //});
 
             services.AddMvc();
 

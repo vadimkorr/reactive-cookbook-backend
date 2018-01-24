@@ -9,8 +9,8 @@ namespace Reactive.UserIdentity
 {
     public class UserStore : IUserIdentity
     {
-        private UserQueries<ApplicationUser> _userIdentityQueries;
-        public UserStore(UserQueries<ApplicationUser> userIdentityQueries)
+        private IUserQueries<ApplicationUser> _userIdentityQueries;
+        public UserStore(IUserQueries<ApplicationUser> userIdentityQueries)
         {
             _userIdentityQueries = userIdentityQueries;
         }

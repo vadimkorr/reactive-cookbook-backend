@@ -10,6 +10,7 @@ using Models.DbModels;
 
 namespace Reactive.Webapi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {

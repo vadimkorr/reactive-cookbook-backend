@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reactive.Webapi", "Reactive.Webapi\Reactive.Webapi.csproj", "{60E1F4CA-D893-40A3-9CDB-FAE9D17892DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reactive.Webapi", "Reactive.Webapi\Reactive.Webapi.csproj", "{60E1F4CA-D893-40A3-9CDB-FAE9D17892DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reactive.DAL", "..\Reactive.DAL\Reactive.DAL.csproj", "{7CB408F6-673A-4171-8095-CE9102C5708E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reactive.DAL", "..\Reactive.DAL\Reactive.DAL.csproj", "{7CB408F6-673A-4171-8095-CE9102C5708E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reactive.BLL", "Reactive.BLL\Reactive.BLL.csproj", "{498FD690-EC86-4073-9791-1766762BDFBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reactive.BLL", "Reactive.BLL\Reactive.BLL.csproj", "{498FD690-EC86-4073-9791-1766762BDFBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StorageProviders", "StorageProviders\StorageProviders.csproj", "{198B1F08-194F-4CEB-AC34-23A8DCC3887B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reactive.UserIdentity", "StorageProviders\Reactive.UserIdentity.csproj", "{198B1F08-194F-4CEB-AC34-23A8DCC3887B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{8C2CB933-A19C-40CB-9FB9-8E7FA0C98971}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{198B1F08-194F-4CEB-AC34-23A8DCC3887B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{198B1F08-194F-4CEB-AC34-23A8DCC3887B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{198B1F08-194F-4CEB-AC34-23A8DCC3887B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C2CB933-A19C-40CB-9FB9-8E7FA0C98971}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C2CB933-A19C-40CB-9FB9-8E7FA0C98971}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C2CB933-A19C-40CB-9FB9-8E7FA0C98971}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C2CB933-A19C-40CB-9FB9-8E7FA0C98971}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
