@@ -67,6 +67,10 @@ namespace Reactive.Webapi
                 return new UserQueries(cosmosDbClient.get(), USERS_IDENTUTY_DB_NAME, USERS_IDENTITY_COLLECTION_NAME);
             });
 
+            services.AddTransient<IRecipeQueries>(provider => {
+                return new RecipeQueries(cosmosDbClient.get(), USERS_IDENTUTY_DB_NAME, USERS_IDENTITY_COLLECTION_NAME);
+            });
+
             // configure jwt authentication
             //var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes("1234567890123456");// (appSettings.Secret);
@@ -96,6 +100,16 @@ namespace Reactive.Webapi
 
             services.AddMvc();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+
             // Add application services.
             //services.AddTransient<IEmailSender, AuthMessageSender>();
             //services.AddTransient<ISmsSender, AuthMessageSender>();
@@ -108,6 +122,7 @@ namespace Reactive.Webapi
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors("CorsPolicy");
             app.UseAuthentication();
             app.UseMvc();
         }
