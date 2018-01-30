@@ -29,6 +29,9 @@ namespace Reactive.Webapi
         private const string USERS_IDENTUTY_DB_NAME = "UserIdentity";
         private const string USERS_IDENTITY_COLLECTION_NAME = "users";
 
+        private const string REACTIVE_DB_NAME = "Reactive";
+        private const string RECIPES_COLLECTION_NAME = "recipes";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -42,6 +45,9 @@ namespace Reactive.Webapi
             CosmosDbClient cosmosDbClient = new CosmosDbClient(_endpointUri, _primaryKey);
             cosmosDbClient.CreateDatabase(USERS_IDENTUTY_DB_NAME);
             cosmosDbClient.CreateCollection(USERS_IDENTUTY_DB_NAME, USERS_IDENTITY_COLLECTION_NAME);
+
+            cosmosDbClient.CreateDatabase(REACTIVE_DB_NAME);
+            cosmosDbClient.CreateCollection(REACTIVE_DB_NAME, RECIPES_COLLECTION_NAME);
 
             // Configure Identity
             services.Configure<IdentityOptions>(options =>
@@ -68,7 +74,7 @@ namespace Reactive.Webapi
             });
 
             services.AddTransient<IRecipeQueries>(provider => {
-                return new RecipeQueries(cosmosDbClient.get(), USERS_IDENTUTY_DB_NAME, USERS_IDENTITY_COLLECTION_NAME);
+                return new RecipeQueries(cosmosDbClient.get(), REACTIVE_DB_NAME, RECIPES_COLLECTION_NAME);
             });
 
             // configure jwt authentication

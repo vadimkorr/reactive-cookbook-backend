@@ -10,8 +10,12 @@ namespace reactive.Models.DbModels
         [JsonProperty(PropertyName = "id")]
         public virtual Guid Id { get; set; } = Guid.NewGuid();
         public virtual Guid UserId { get; set; }
-        public virtual DateTime Date { get; set; } = DateTime.Now;
-        public virtual string Name { get; set; }
-        public RecipeStep[] RecipeStep { get; set; }
+        public virtual DateTime Date { get; set; }
+        public virtual String Name { get; set; }
+        public virtual RecipeStep[] RecipeSteps { get; set; }
+        public override String ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 }

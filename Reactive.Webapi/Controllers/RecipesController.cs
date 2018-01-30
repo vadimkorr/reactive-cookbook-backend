@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Models.DbModels;
+using Newtonsoft.Json.Linq;
 using reactive.Models.DbModels;
 using reactive.Models.DTO;
+using reactive.Models.Enums;
 using Reactive.DAL.CosmosDb;
 using Reactive.DAL.Interfaces;
+
+//using Microsoft.AspNet.Identity;
 
 namespace Reactive.Webapi.Controllers
 {
@@ -18,21 +23,25 @@ namespace Reactive.Webapi.Controllers
     [Route("api/Recipes")]
     public class RecipesController : Controller
     {
+        //private readonly ClaimsPrincipal _caller;
         UserManager<ApplicationUser> _userManager;
         IRecipeQueries _recipeQueries;
 
         public RecipesController(
             UserManager<ApplicationUser> userManager,
-            IRecipeQueries recipeQueries)
+            IRecipeQueries recipeQueries)//,
+            //ClaimsPrincipal caller)
         {
+            //_caller = caller;
             _userManager = userManager;
             _recipeQueries = recipeQueries;
         }
 
-        [AllowAnonymous]
+        [Authorize]
+        //[AllowAnonymous]
         [HttpPost]
         [Route("submit")]
-        public IActionResult Submit([FromBody]SubmitRecipeDto dto)
+        public async Task<IActionResult> Submit([FromBody]SubmitRecipeDto dto)
         {
             if (dto == null)
             {
@@ -40,13 +49,24 @@ namespace Reactive.Webapi.Controllers
             }
             try
             {
-                ApplicationUser user = _userManager.GetUserAsync(HttpContext.User).GetAwaiter().GetResult();
-                Recipe recipe = new Recipe() {
-                    UserId = user.Id,
+                //var n = User.Identity.Name;
+                //RequestContext.Principal
+                //var email = User.FindFirst("sub")?.Value;
+                //var userId = HttpContext.User.GetUserId();
+                //var userId = User.FindFirst(ClaimTypes.NameIdentifier);
+                //var username = Request.Form["username"];
+                //var u = _caller.Claims.Select(c => new { c.Type, c.Value });
+                //ApplicationUser user = await _userManager.GetUserAsync(HttpContext.User);
+
+
+                Recipe recipe = new Recipe()
+                {
+                    UserId = Guid.NewGuid(),
+                    Date = dto.Date,
                     Name = dto.Name,
-                    RecipeStep = dto.RecipeSteps
+                    RecipeSteps = dto.RecipeSteps
                 };
-                var result = _recipeQueries.Submit(recipe).GetAwaiter().GetResult();
+                var result = await _recipeQueries.Submit(recipe);
                 return Ok(result);
             }
             catch (Exception e)
