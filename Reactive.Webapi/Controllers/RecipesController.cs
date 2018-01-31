@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -37,31 +38,37 @@ namespace Reactive.Webapi.Controllers
             _recipeQueries = recipeQueries;
         }
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         //[AllowAnonymous]
         [HttpPost]
         [Route("submit")]
         public async Task<IActionResult> Submit([FromBody]SubmitRecipeDto dto)
         {
             if (dto == null)
-            {
                 return BadRequest(ModelState);
-            }
+
             try
             {
-                //var n = User.Identity.Name;
-                //RequestContext.Principal
-                //var email = User.FindFirst("sub")?.Value;
-                //var userId = HttpContext.User.GetUserId();
-                //var userId = User.FindFirst(ClaimTypes.NameIdentifier);
-                //var username = Request.Form["username"];
-                //var u = _caller.Claims.Select(c => new { c.Type, c.Value });
-                //ApplicationUser user = await _userManager.GetUserAsync(HttpContext.User);
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                //if (identity != null)
+                //{
+                //    IEnumerable<Claim> claims = identity.Claims;
+                //    // or
+                //    //identity.FindFirst("ClaimName").Value;
 
+                //}
+                ////var n = User.Identity.Name;
+                ////var email = User.FindFirst("sub")?.Value;
+                ////var userId = HttpContext.User.Claims.FirstOrDefault();
+                ////var userId = User.FindFirst(ClaimTypes.NameIdentifier);
+                ////var username = Request.Form["username"];
+                ////var u = _caller.Claims.Select(c => new { c.Type, c.Value });
+
+                //ApplicationUser user = await _userManager.GetUserId(HttpContext.User.Identity as ClaimsPrincipal);
 
                 Recipe recipe = new Recipe()
                 {
-                    UserId = Guid.NewGuid(),
+                    UserId = Guid.Parse(identity.FindFirst("id").Value),
                     Date = dto.Date,
                     Name = dto.Name,
                     RecipeSteps = dto.RecipeSteps

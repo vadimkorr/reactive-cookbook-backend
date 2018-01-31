@@ -79,24 +79,29 @@ namespace Reactive.Webapi
 
             // configure jwt authentication
             //var appSettings = appSettingsSection.Get<AppSettings>();
-            var key = Encoding.ASCII.GetBytes("1234567890123456");// (appSettings.Secret);
+            var key = Encoding.ASCII.GetBytes("123456789123456789123456789");// (appSettings.Secret);
             services.AddAuthentication(x =>
             {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                //x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                //x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddJwtBearer(x =>
             {
                 x.RequireHttpsMetadata = false;
-                x.SaveToken = true;
+                //x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
+                    ValidIssuer = "Reactive",
+                    ValidAudience = "Reactive",
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
+                    ValidateLifetime = false
+                    //ValidateIssuer = false,
+                    //ValidateAudience = false
                 };
             });
+            services.AddAuthorization();
 
             // Identity Services
             //services.AddSingleton<>();
