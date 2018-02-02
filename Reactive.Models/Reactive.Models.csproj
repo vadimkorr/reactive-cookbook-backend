@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <AssemblyName>reactive.Models</AssemblyName>
-    <RootNamespace>reactive.Models</RootNamespace>
+    <AssemblyName>Reactive.Models</AssemblyName>
+    <RootNamespace>Reactive.Models</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

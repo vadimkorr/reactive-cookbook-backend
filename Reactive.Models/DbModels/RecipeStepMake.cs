@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace reactive.Models.DbModels
+namespace Reactive.Models.DbModels
 {
     public class RecipeStepMake : IRecipeStepDescription
     {

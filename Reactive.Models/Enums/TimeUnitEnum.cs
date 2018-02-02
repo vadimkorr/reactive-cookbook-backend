@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace reactive.Models.Enums
+namespace Reactive.Models.Enums
 {
     public enum TimeUnitEnum
     {

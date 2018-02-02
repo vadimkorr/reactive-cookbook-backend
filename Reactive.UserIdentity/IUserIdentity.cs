@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Models.DbModels;
+using Reactive.Models.DbModels;
 
 namespace Reactive.UserIdentity
 {

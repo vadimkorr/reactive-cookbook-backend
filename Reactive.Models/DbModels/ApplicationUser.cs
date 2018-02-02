@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Security.Principal;
 
-namespace Models.DbModels
+namespace Reactive.Models.DbModels
 {
     public class ApplicationUser// : IIdentity
     {

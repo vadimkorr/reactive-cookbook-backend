@@ -1,4 +1,4 @@
-﻿namespace reactive.Models.Enums
+﻿namespace Reactive.Models.Enums
 {
     public enum QuantityUnitEnum
     {

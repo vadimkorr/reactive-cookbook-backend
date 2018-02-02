@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Reactive.DAL\Reactive.DAL.csproj" />
-    <ProjectReference Include="..\Models\Models.csproj" />
+    <ProjectReference Include="..\Reactive.DAL\Reactive.DAL.csproj" />
+    <ProjectReference Include="..\Reactive.Models\Reactive.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>

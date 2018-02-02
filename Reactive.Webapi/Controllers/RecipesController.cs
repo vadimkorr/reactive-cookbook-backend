@@ -8,12 +8,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Models.DbModels;
+using Reactive.Models.DbModels;
 using Newtonsoft.Json.Linq;
-using reactive.Models.DbModels;
-using reactive.Models.DTO;
-using reactive.Models.Enums;
-using Reactive.DAL.CosmosDb;
+using Reactive.Models.DbModels;
+using Reactive.Models.DTO;
+using Reactive.Models.Enums;
 using Reactive.DAL.Interfaces;
 
 //using Microsoft.AspNet.Identity;

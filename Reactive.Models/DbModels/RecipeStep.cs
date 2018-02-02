@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json;
-using reactive.Models.Enums;
+using Reactive.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace reactive.Models.DbModels
+namespace Reactive.Models.DbModels
 {
     public class RecipeStep
     {

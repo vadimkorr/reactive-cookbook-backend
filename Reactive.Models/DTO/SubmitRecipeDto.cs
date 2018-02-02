@@ -1,9 +1,9 @@
-﻿using reactive.Models.DbModels;
+﻿using Reactive.Models.DbModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace reactive.Models.DTO
+namespace Reactive.Models.DTO
 {
     public class SubmitRecipeDto
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Models.DbModels
+namespace Reactive.Models.DbModels
 {
     public class ApplicationRole
     {

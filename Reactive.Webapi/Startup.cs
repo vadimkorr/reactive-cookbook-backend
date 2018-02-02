@@ -15,9 +15,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Models.DbModels;
 using Reactive.DAL.CosmosDb;
 using Reactive.DAL.Interfaces;
+using Reactive.Models.DbModels;
 using Reactive.UserIdentity;
 
 namespace Reactive.Webapi

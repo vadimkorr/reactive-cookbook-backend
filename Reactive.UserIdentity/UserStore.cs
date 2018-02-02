@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Models.DbModels;
 using Reactive.DAL.Interfaces;
+using Reactive.Models.DbModels;
 using System;
 using System.Threading;
 using System.Threading.Tasks;

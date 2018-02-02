@@ -11,8 +11,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Models.DbModels;
-using reactive.Models.DTO;
+using Reactive.Models.DTO;
+using Reactive.Models.DbModels;
 
 namespace Reactive.Webapi.Controllers
 {

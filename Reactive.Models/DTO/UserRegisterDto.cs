@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace reactive.Models.DTO
+namespace Reactive.Models.DTO
 {
-    public class UserSigninDto
+    public class UserRegisterDto
     {
+        public string Email;
         public string UserName;
         public string Password;
-        public bool RememberMe;
     }
 }
