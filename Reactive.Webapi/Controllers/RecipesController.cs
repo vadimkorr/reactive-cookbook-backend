@@ -20,25 +20,21 @@ using Reactive.DAL.Interfaces;
 namespace Reactive.Webapi.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Recipes")]
+    [Route("api/recipes")]
     public class RecipesController : Controller
     {
-        //private readonly ClaimsPrincipal _caller;
         UserManager<ApplicationUser> _userManager;
         IRecipeQueries _recipeQueries;
 
         public RecipesController(
             UserManager<ApplicationUser> userManager,
-            IRecipeQueries recipeQueries)//,
-            //ClaimsPrincipal caller)
+            IRecipeQueries recipeQueries)
         {
-            //_caller = caller;
             _userManager = userManager;
             _recipeQueries = recipeQueries;
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        //[AllowAnonymous]
         [HttpPost]
         [Route("submit")]
         public async Task<IActionResult> Submit([FromBody]SubmitRecipeDto dto)
@@ -49,22 +45,6 @@ namespace Reactive.Webapi.Controllers
             try
             {
                 var identity = HttpContext.User.Identity as ClaimsIdentity;
-                //if (identity != null)
-                //{
-                //    IEnumerable<Claim> claims = identity.Claims;
-                //    // or
-                //    //identity.FindFirst("ClaimName").Value;
-
-                //}
-                ////var n = User.Identity.Name;
-                ////var email = User.FindFirst("sub")?.Value;
-                ////var userId = HttpContext.User.Claims.FirstOrDefault();
-                ////var userId = User.FindFirst(ClaimTypes.NameIdentifier);
-                ////var username = Request.Form["username"];
-                ////var u = _caller.Claims.Select(c => new { c.Type, c.Value });
-
-                //ApplicationUser user = await _userManager.GetUserId(HttpContext.User.Identity as ClaimsPrincipal);
-
                 Recipe recipe = new Recipe()
                 {
                     UserId = Guid.Parse(identity.FindFirst("id").Value),
@@ -74,6 +54,25 @@ namespace Reactive.Webapi.Controllers
                 };
                 var result = await _recipeQueries.Submit(recipe);
                 return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e?.Message);
+            }
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet]
+        [Route("get")]
+        public async Task<IActionResult> GetMyRecipes()
+        {
+            try
+            {
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                var userId = Guid.Parse(identity.FindFirst("id").Value);
+
+                var result = await _recipeQueries.GetRecipesByUserId(userId);
+                return Json(result);
             }
             catch (Exception e)
             {
