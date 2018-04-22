@@ -53,7 +53,7 @@ namespace Reactive.Webapi.Controllers
                     RecipeSteps = dto.RecipeSteps
                 };
                 var result = await _recipeQueries.Submit(recipe);
-                return Ok(result);
+                return Json(result);
             }
             catch (Exception e)
             {

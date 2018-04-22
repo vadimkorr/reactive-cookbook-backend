@@ -9,7 +9,7 @@ namespace Reactive.DAL.Interfaces
 {
     public interface IRecipeQueries
     {
-        Task<bool> Submit(Recipe recipe);
+        Task<Guid> Submit(Recipe recipe);
         Task<IEnumerable<Recipe>> GetRecipesByUserId(Guid userId);
     }
 }

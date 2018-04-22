@@ -30,10 +30,10 @@ namespace Reactive.DAL.CosmosDb
             return Task.FromResult(recipesQuery.AsEnumerable());
         }
 
-        public Task<bool> Submit(Recipe recipe) {
+        public Task<Guid> Submit(Recipe recipe) {
             Task<ResourceResponse<Document>> result = _client.CreateDocumentAsync(
                 UriFactory.CreateDocumentCollectionUri(_db, _collection), recipe);
-            return Task.FromResult(result.IsCompletedSuccessfully);
+            return Task.FromResult(recipe.Id);
         }
     }
 }
